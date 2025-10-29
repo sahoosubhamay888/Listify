@@ -1,71 +1,40 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-/*
- * Simple decentralized coin flip betting game.
- * Demonstrates:
- *  - Mapping player bets
- *  - Pseudo-randomness (for demo)
- *  - Payout mechanism
- */
-
-contract CoinFlip {
-    address public owner;
-
-    // Track total bets and player balances
-    mapping(address => uint256) public playerBalances;
-
-    event BetPlaced(address indexed player, uint256 amount, bool guess);
-    event BetResult(address indexed player, bool won, uint256 payout);
-
-    constructor() {
-        owner = msg.sender;
+contract TodoManager {
+    struct Todo {
+        string task;
+        bool completed;
     }
 
-    // Allow players to place a bet
-    // guess: true for Heads, false for Tails
-    function placeBet(bool guess) external payable {
-        require(msg.value > 0, "Bet must be greater than 0 ETH");
+    // Array to store all todos
+    Todo[] private todos;
 
-        emit BetPlaced(msg.sender, msg.value, guess);
-
-        // Pseudo-random "coin flip"
-        bool coinFlipResult = _flipCoin();
-
-        if (coinFlipResult == guess) {
-            uint256 payout = msg.value * 2;
-            playerBalances[msg.sender] += payout;
-            emit BetResult(msg.sender, true, payout);
-        } else {
-            emit BetResult(msg.sender, false, 0);
-        }
+    // Add a new task
+    function addTask(string memory _task) public {
+        todos.push(Todo({task: _task, completed: false}));
     }
 
-    // Player can withdraw winnings anytime
-    function withdraw() external {
-        uint256 amount = playerBalances[msg.sender];
-        require(amount > 0, "No winnings to withdraw");
-        playerBalances[msg.sender] = 0;
-        payable(msg.sender).transfer(amount);
+    // Mark a task as completed
+    function completeTask(uint _index) public {
+        require(_index < todos.length, "Task does not exist");
+        todos[_index].completed = true;
     }
 
-    // Owner can deposit or withdraw contract funds
-    function ownerWithdraw(uint256 amount) external {
-        require(msg.sender == owner, "Only owner");
-        payable(owner).transfer(amount);
+    // Get total number of tasks
+    function getTodoCount() public view returns (uint) {
+        return todos.length;
     }
 
-    // --- INTERNAL FUNCTIONS ---
-
-    // Generate a pseudo-random result (not secure!)
-    function _flipCoin() internal view returns (bool) {
-        // Uses blockhash and timestamp — predictable on mainnet!
-        uint256 random = uint256(
-            keccak256(abi.encodePacked(block.timestamp, block.prevrandao, msg.sender))
-        );
-        return (random % 2 == 0);
+    // Get a task by index
+    function getTask(uint _index) public view returns (string memory task, bool completed) {
+        require(_index < todos.length, "Task does not exist");
+        Todo storage todo = todos[_index];
+        return (todo.task, todo.completed);
     }
 
-    // Fallback: allow contract to receive ETH
-    receive() external payable {}
+    // Get all tasks (optional, for convenience)
+    function getAllTasks() public view returns (Todo[] memory) {
+        return todos;
+    }
 }
