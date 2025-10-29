@@ -1,11 +1,9 @@
-<img width="1713" height="835" alt="Contract" src="https://github.com/user-attachments/assets/0b73688e-e454-4584-b514-0a81c89ffec6" />
-
 # 🪙 CoinFlip Smart Contract  
 
 A simple **decentralized coin flip betting game** built with Solidity.  
 This project demonstrates core blockchain and smart contract concepts in an easy-to-understand way — including bets, payouts, randomness, and on-chain event logging.  
-
-> ⚠️ This project is for **educational purposes only** and **not secure for real betting** — it uses pseudo-randomness that can be manipulated on mainnet.  
+<img width="1920" height="1020" alt="Transaction" src="https://github.com/user-attachments/assets/597dc1f0-ae69-405d-b894-f2910c30d754" />
+ 
 
 ---
 
@@ -129,4 +127,3 @@ contract CoinFlip {
     // Fallback: allow contract to receive ETH
     receive() external payable {}
 }
-<img width="1920" height="1020" alt="Contract" src="https://github.com/user-attachments/assets/04c35969-77c9-47e6-bc50-054c5179be1b" />
