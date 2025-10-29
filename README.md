@@ -1,3 +1,4 @@
+<img width="1920" height="1020" alt="Contract" src="https://github.com/user-attachments/assets/d7925fcd-5034-480d-8ecc-0fb3e7f912a8" />
 # 🪙 CoinFlip Smart Contract  
 
 A simple **decentralized coin flip betting game** built with Solidity.  
